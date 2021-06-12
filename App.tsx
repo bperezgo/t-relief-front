@@ -17,6 +17,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home} from './src/containers/Home';
 import {Goals} from './src/containers/Goals';
+import {Progress} from './src/containers/Progress';
 import {Colors, FontColors} from './src/assets/';
 import {setCustomText, setCustomTextInput} from 'react-native-global-props';
 
@@ -61,6 +62,18 @@ const App = () => {
         <Tabs.Screen
           name="Goals"
           component={Goals}
+          options={{
+            tabBarIcon: ({size, color}) => (
+              <Image
+                style={{tintColor: color, width: size, height: size}}
+                source={require('./src/assets/icons/star.png')}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="Progress"
+          component={Progress}
           options={{
             tabBarIcon: ({size, color}) => (
               <Image

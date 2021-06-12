@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {Text} from 'react-native';
+import {Background} from '../components/Background';
 
 export const Home = () => (
-  <View>
+  <Background>
     <Text>Hola T-Relief</Text>
-  </View>
+  </Background>
 );

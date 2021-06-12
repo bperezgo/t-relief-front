@@ -1,20 +1,50 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, useColorScheme, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  useColorScheme,
+  TextInput,
+  GestureResponderEvent,
+} from 'react-native';
 import {Background} from '../components/Background';
+import {SaveButton} from '../components/SaveButton';
 import {GoalType} from '../@types/';
-import {Colors, FontColors} from '../assets';
+import {FontColors} from '../assets';
+import {SERVER_API_CONFIG} from '../constants';
 
 export const Goals = () => {
   const [inputValue, setInputValue] = useState('');
   const isDarkMode = useColorScheme() === 'dark';
-  const colors = isDarkMode ? Colors.darker : Colors.lighter;
-  const [goals, setGoals] = useState<GoalType[]>([]);
+  // const [goals, setGoals] = useState<GoalType[]>([]);
 
   const handleChange = (value: string) => {
     setInputValue(value);
   };
+
+  const handlePress = async (e: GestureResponderEvent) => {
+    try {
+      const body = {id: '', kind: '', unit: '', value: parseFloat(inputValue)};
+      const response = await fetch(SERVER_API_CONFIG.HOST, {
+        method: 'POST',
+        body: JSON.stringify(body),
+      });
+      // const data = await response.json();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // useEffect(() => {
+  //   const getGoals = async () => {
+  //     const response = await fetch(SERVER_API_CONFIG.HOST);
+  //     const data = await response.json();
+  //     setGoals(data);
+  //   };
+  //   getGoals();
+  // });
   return (
-    <Background style={styles.container}>
+    <Background>
       <View>
         <Text style={styles.title}>Metas</Text>
       </View>
@@ -26,16 +56,14 @@ export const Goals = () => {
           onChangeText={handleChange}
         />
       </View>
+      <View style={styles.btnContainer}>
+        <SaveButton onPress={handlePress} />
+      </View>
     </Background>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
   title: {
     alignContent: 'center',
     fontSize: 40,
@@ -64,5 +92,8 @@ const styles = StyleSheet.create({
     color: FontColors.lighter.white,
     textAlign: 'center',
     fontSize: 20,
+  },
+  btnContainer: {
+    alignItems: 'center',
   },
 });
