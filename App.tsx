@@ -18,6 +18,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home} from './src/containers/Home';
 import {Goals} from './src/containers/Goals';
 import {Progress} from './src/containers/Progress';
+import {HighDemandsZones} from './src/containers/HighDemandZones'
 import {Colors, FontColors} from './src/assets/';
 import {setCustomText, setCustomTextInput} from 'react-native-global-props';
 
@@ -54,7 +55,7 @@ const App = () => {
             tabBarIcon: ({size, color}) => (
               <Image
                 style={{tintColor: color, width: size, height: size}}
-                source={require('./src/assets/icons/star.png')}
+                source={require('./src/assets/icons/home.png')}
               />
             ),
           }}
@@ -66,7 +67,7 @@ const App = () => {
             tabBarIcon: ({size, color}) => (
               <Image
                 style={{tintColor: color, width: size, height: size}}
-                source={require('./src/assets/icons/star.png')}
+                source={require('./src/assets/icons/configuration.png')}
               />
             ),
           }}
@@ -78,7 +79,19 @@ const App = () => {
             tabBarIcon: ({size, color}) => (
               <Image
                 style={{tintColor: color, width: size, height: size}}
-                source={require('./src/assets/icons/star.png')}
+                source={require('./src/assets/icons/esta.png')}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="HighDemandsZones"
+          component={HighDemandsZones}
+          options={{
+            tabBarIcon: ({size, color}) => (
+              <Image
+                style={{tintColor: color, width: size, height: size}}
+                source={require('./src/assets/icons/ubication.png')}
               />
             ),
           }}
