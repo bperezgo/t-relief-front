@@ -35,6 +35,7 @@ export const Goals = () => {
         body: JSON.stringify(body),
       });
       const data = await response.json();
+      setInputValue('');
     } catch (err) {
       console.log(err);
     }
