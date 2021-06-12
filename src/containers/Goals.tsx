@@ -16,7 +16,7 @@ import {SERVER_API_CONFIG} from '../constants';
 export const Goals = () => {
   const [inputValue, setInputValue] = useState('');
   const isDarkMode = useColorScheme() === 'dark';
-  // const [goals, setGoals] = useState<GoalType[]>([]);
+  const [goals, setGoals] = useState<GoalType[]>([]);
 
   const handleChange = (value: string) => {
     setInputValue(value);
@@ -24,25 +24,34 @@ export const Goals = () => {
 
   const handlePress = async (e: GestureResponderEvent) => {
     try {
-      const body = {id: '', kind: '', unit: '', value: parseFloat(inputValue)};
-      const response = await fetch(SERVER_API_CONFIG.HOST, {
+      const body = {
+        id: SERVER_API_CONFIG.DRIVER_ID,
+        kind: 'copDay',
+        unit: 'COP',
+        value: parseFloat(inputValue),
+      };
+      const response = await fetch(`${SERVER_API_CONFIG.HOST}/goal`, {
         method: 'POST',
         body: JSON.stringify(body),
       });
-      // const data = await response.json();
+      const data = await response.json();
     } catch (err) {
       console.log(err);
     }
   };
 
-  // useEffect(() => {
-  //   const getGoals = async () => {
-  //     const response = await fetch(SERVER_API_CONFIG.HOST);
-  //     const data = await response.json();
-  //     setGoals(data);
-  //   };
-  //   getGoals();
-  // });
+  useEffect(() => {
+    const getGoals = async () => {
+      const response = await fetch(
+        `${SERVER_API_CONFIG.HOST}/driver/${SERVER_API_CONFIG.DRIVER_ID}`,
+      );
+      const data = await response.json();
+      setGoals(data.body[0].goals[0]);
+      const inputVal = String(data.body[0].goals[0].value);
+      setInputValue(inputVal);
+    };
+    getGoals();
+  }, []);
   return (
     <Background>
       <View>

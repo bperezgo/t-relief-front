@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     borderRadius: 125,
     elevation: 5,
-    opacity: 0.7,
+    opacity: 0.5,
   },
   callToActionMessage: {
     color: FontColors.lighter.white,

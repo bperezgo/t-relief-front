@@ -1,18 +1,32 @@
 import React, {useEffect, useState} from 'react';
-import {Text, useColorScheme} from 'react-native';
+import {Text} from 'react-native';
 import {Background} from '../components/Background';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {StyleSheet} from 'react-native';
 import {FontColors} from '../assets';
+import {SERVER_API_CONFIG} from '../constants';
 
 export const Progress = () => {
   const [copPerDay, setCopPerDay] = useState(0);
   const [accepted, setAccepted] = useState(0);
   const [rejected, setRejected] = useState(0);
   useEffect(() => {
-    const getData = async () => {};
+    const getData = async () => {
+      const driverId = SERVER_API_CONFIG.DRIVER_ID;
+      const [fareResponse, countResponse] = await Promise.all([
+        fetch(`${SERVER_API_CONFIG.HOST}/race/fare/${driverId}`),
+        fetch(`${SERVER_API_CONFIG.HOST}/race/count/${driverId}`),
+      ]);
+      const [fare, count] = await Promise.all([
+        fareResponse.json(),
+        countResponse.json(),
+      ]);
+      setCopPerDay(fare.body[0].amount);
+      setAccepted(count.body.accepted);
+      setRejected(count.body.rejected);
+    };
     getData();
-  });
+  }, []);
   return (
     <Background>
       <Text style={styles.title}>Pesos al día</Text>
