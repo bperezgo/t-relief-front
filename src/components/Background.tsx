@@ -5,9 +5,10 @@ import {Colors} from '../assets';
 
 type BackgrounProps = {
   children: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 };
 
-export const Background = ({children}: BackgrounProps) => {
+export const Background = ({children, style}: BackgrounProps) => {
   const isDarkMode = useColorScheme() === 'dark';
   const colors = isDarkMode ? Colors.darker : Colors.lighter;
   return (
@@ -16,7 +17,7 @@ export const Background = ({children}: BackgrounProps) => {
       angle={135}
       angleCenter={{x: 0.0, y: 0.0}}
       colors={[colors.secondary, colors.secondaryBack]}
-      style={styles.container}>
+      style={style ? style : styles.container}>
       {children}
     </LinearGradient>
   );
